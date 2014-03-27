@@ -21,6 +21,15 @@ type Commit struct {
 	Stats     *CommitStats  `json:"stats,omitempty"`
 }
 
+type CommitRequest struct {
+	SHA       *string       `json:"sha,omitempty"`
+	Author    *CommitAuthor `json:"author,omitempty"`
+	Committer *CommitAuthor `json:"committer,omitempty"`
+	Message   *string       `json:"message,omitempty"`
+	Tree      *string       `json:"tree,omitempty"`
+	Parents   []string      `json:"parents,omitempty"`
+}
+
 func (c Commit) String() string {
 	return Stringify(c)
 }
@@ -63,7 +72,7 @@ func (s *GitService) GetCommit(owner string, repo string, sha string) (*Commit, 
 // the authenticated user’s information and the current date.
 //
 // GitHub API docs: http://developer.github.com/v3/git/commits/#create-a-commit
-func (s *GitService) CreateCommit(owner string, repo string, commit *Commit) (*Commit, *Response, error) {
+func (s *GitService) CreateCommit(owner string, repo string, commit *CommitRequest) (*Commit, *Response, error) {
 	u := fmt.Sprintf("repos/%v/%v/git/commits", owner, repo)
 	req, err := s.client.NewRequest("POST", u, commit)
 	if err != nil {

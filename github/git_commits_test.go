@@ -42,10 +42,10 @@ func TestGitService_CreateCommit(t *testing.T) {
 	setup()
 	defer teardown()
 
-	input := &Commit{Message: String("m"), Tree: &Tree{SHA: String("t")}}
+	input := &CommitRequest{Message: String("m"), Tree: String("t")}
 
 	mux.HandleFunc("/repos/o/r/git/commits", func(w http.ResponseWriter, r *http.Request) {
-		v := new(Commit)
+		v := new(CommitRequest)
 		json.NewDecoder(r.Body).Decode(v)
 
 		testMethod(t, r, "POST")
