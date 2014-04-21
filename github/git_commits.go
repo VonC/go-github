@@ -74,6 +74,8 @@ func (s *GitService) GetCommit(owner string, repo string, sha string) (*Commit, 
 // GitHub API docs: http://developer.github.com/v3/git/commits/#create-a-commit
 func (s *GitService) CreateCommit(owner string, repo string, commit *CommitRequest) (*Commit, *Response, error) {
 	u := fmt.Sprintf("repos/%v/%v/git/commits", owner, repo)
+	// TODO make CommitRequest private and renamed as createCommit struct
+	// Pass Commit only, as in git_refs
 	req, err := s.client.NewRequest("POST", u, commit)
 	if err != nil {
 		return nil, nil, err
