@@ -45,6 +45,7 @@ type Repository struct {
 	Private   *bool `json:"private"`
 	HasIssues *bool `json:"has_issues"`
 	HasWiki   *bool `json:"has_wiki"`
+	AutoInit  *bool `json:"auto_init"`
 }
 
 func (r Repository) String() string {
